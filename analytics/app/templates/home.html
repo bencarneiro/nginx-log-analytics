@@ -1,3 +1,48 @@
 <html>
-    <h1>Yee Haw</h1>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <body>
+    <h1>
+        Site Analytics
+    </h1>
+    <h2>Daily Unique Visitors</h2>
+    <canvas id="visitors" width="800" height="300"></canvas>
+</body>
+<script>
+
+function get_data() {
+            const DAILY_USER_LABELS = {{ daily_user_labels | safe }};
+            const DAILY_USER_COUNTS = {{ daily_user_counts | safe }};
+
+
+            console.log("{{ pedestrian_death_average | safe }};")
+
+            new Chart(document.getElementById("visitors"), {
+                        type: "bar",
+                        data: {
+                            labels: DAILY_USER_LABELS,
+                            datasets: [
+                            {
+                                data: DAILY_USER_COUNTS,
+                                label: "Daily Unique Users",
+                                borderColor: "#3e95cd",
+                                fill: false
+                            }
+                            ]
+                        },
+                        options: {
+                            title: {
+                            display: true,
+                            responsive: true,
+                            text: "Daily Unique Users"
+                            },
+                            scales: {
+                            y: {
+                                min: 0
+                            }
+                            }
+                        }
+                        });
+}
+get_data()
+</script>
 </html>
