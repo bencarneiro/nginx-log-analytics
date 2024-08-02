@@ -1,0 +1,18 @@
+from django.db import models
+
+# Create your models here.
+
+class Request(models.Model):
+    ip_address = models.CharField(max_length=64, null=False, blank=False)
+    dt = models.DateTimeField(null=False, blank=False)
+    request_type = models.CharField(max_length=16)
+    url = models.CharField(max_length=512, null=False, blank=False)
+    protocol = models.CharField(max_length=64)
+    status_code = models.PositiveSmallIntegerField(null=False, blank=False)
+    bytes_transferred = models.PositiveIntegerField(null=True, blank=True)
+    referrer_url = models.CharField(max_length=512, null=True, blank=True)
+    user_agent = models.CharField(max_length=512, null=True, blank=True)
+
+    class Meta:
+        managed = True
+        table_name = "request"    
