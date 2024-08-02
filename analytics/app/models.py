@@ -15,4 +15,4 @@ class Request(models.Model):
 
     class Meta:
         managed = True
-        table_name = "request"    
+        db_table = "request"    
