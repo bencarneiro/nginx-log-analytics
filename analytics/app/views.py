@@ -30,13 +30,13 @@ def home(request):
 
     url_labels = []
     url_values = []
-    requests_by_url = Request.objects.filter(url__isnull=False).exclude(url__icontains="tiles").values("url").annotate(total_unique_visitors = Count("ip_address", unique=True)).filter(total_unique_visitors__gt=1).order_by("-total_unique_visitors")
-    for r in requests_by_url:
-        url_labels += [r['url']]
-        url_values += [r['total_unique_visitors']]
-    print(requests_by_url)
-    context['url_labels'] = url_labels
-    context['url_values'] = url_values
+    # requests_by_url = Request.objects.filter(url__isnull=False) .values("url").annotate(total_unique_visitors = Count("ip_address", unique=True)).filter(total_unique_visitors__gt=1).order_by("-total_unique_visitors")
+    # for r in requests_by_url:
+    #     url_labels += [r['url']]
+    #     url_values += [r['total_unique_visitors']]
+    # print(requests_by_url)
+    # context['url_labels'] = url_labels
+    # context['url_values'] = url_values
 
 
     print(daily_unique_users)

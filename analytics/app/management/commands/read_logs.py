@@ -6,7 +6,6 @@ from app.models import Request
 class Command(BaseCommand):
     
     def handle(self, *args, **options):
-        Request.objects.all().delete()
         filenames = [
             "access.log",
             "access.log.1",
@@ -43,9 +42,13 @@ class Command(BaseCommand):
                     continue
                     # subsections = [None, None, None]
                 http_data = sections[2].split(" ")
+                ip = sections[0].split(" - - ")[0]
+                if len(ip) > 64:
+                    print(x)
+                    continue
 
                 r = Request(
-                    ip_address = sections[0].split(" - - ")[0],
+                    ip_address = ip,
                     dt =  datetime.datetime.strptime(date, '%d/%b/%Y:%H:%M:%S %z'),
                     request_type = subsections[0],
                     url = subsections[1],
