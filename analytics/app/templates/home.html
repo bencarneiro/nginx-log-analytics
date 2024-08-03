@@ -6,15 +6,21 @@
     </h1>
     <h2>Daily Unique Visitors</h2>
     <canvas id="visitors" width="800" height="300"></canvas>
+
+    <h2>Daily Requests Served</h2>
+    <canvas id="requests" width="800" height="300"></canvas>
+
+    <h2>Unique Visitors to each URL</h2>
+    <canvas id="urls" width="800" height="300"></canvas>
 </body>
 <script>
 
 function get_data() {
             const DAILY_USER_LABELS = {{ daily_user_labels | safe }};
             const DAILY_USER_COUNTS = {{ daily_user_counts | safe }};
-
-
-            console.log("{{ pedestrian_death_average | safe }};")
+            const DAILY_REQUEST_COUNTS = {{ daily_request_counts | safe }};
+            const URL_LABELS = {{ url_labels | safe }};
+            const URL_COUNTS = {{ url_values | safe }};
 
             new Chart(document.getElementById("visitors"), {
                         type: "bar",
@@ -34,6 +40,62 @@ function get_data() {
                             display: true,
                             responsive: true,
                             text: "Daily Unique Users"
+                            },
+                            scales: {
+                            y: {
+                                min: 0
+                            }
+                            }
+                        }
+                        });
+
+
+            new Chart(document.getElementById("requests"), {
+                        type: "bar",
+                        data: {
+                            labels: DAILY_USER_LABELS,
+                            datasets: [
+                            {
+                                data: DAILY_REQUEST_COUNTS,
+                                label: "Daily Requests Served",
+                                borderColor: "#3e95cd",
+                                fill: false
+                            }
+                            ]
+                        },
+                        options: {
+                            title: {
+                            display: true,
+                            responsive: true,
+                            text: "Daily Requests Served"
+                            },
+                            scales: {
+                            y: {
+                                min: 0
+                            }
+                            }
+                        }
+                        });
+
+
+            new Chart(document.getElementById("urls"), {
+                        type: "bar",
+                        data: {
+                            labels: URL_LABELS,
+                            datasets: [
+                            {
+                                data: URL_COUNTS,
+                                label: "Unique Visitors to this URL",
+                                borderColor: "#3e95cd",
+                                fill: false
+                            }
+                            ]
+                        },
+                        options: {
+                            title: {
+                            display: true,
+                            responsive: true,
+                            text: "Unique Visitors to this URL"
                             },
                             scales: {
                             y: {

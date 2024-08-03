@@ -34,16 +34,18 @@ class Command(BaseCommand):
                     date = sections[0].split("[")[1].split("]")[0]
                     date = datetime.datetime.strptime(date, '%d/%b/%Y:%H:%M:%S %z')
                     try:
-                        request_type = sections[1].split(" ")[0]
-                        url = sections[1].split(" ")[1]
-                        protocol = sections[1].split(" ")[2]
+                        subsections = sections[1].split(" ")
+                        request_type = subsections[0]
+                        url = subsections[1]
+                        protocol = subsections[2]
                     except:
                         print(x)
                         request_type = None
                         url = None
                         protocol = None
-                    status_code = sections[2].split(" ")[1]
-                    bytes_transferred = sections[2].split(" ")[2]
+                    subsections = sections[2].split(" ")
+                    status_code = subsections[1]
+                    bytes_transferred = subsections[2]
                     referrer_url = sections[3]
                     user_agent = sections[5]
 
