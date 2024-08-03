@@ -25,6 +25,7 @@ class Command(BaseCommand):
             "access.log.14"
         ]
         for filepath in filenames:
+            print(filepath)
             f = open("/var/log/nginx/" + filepath, "r")
             for x in f:
                 try:
@@ -37,6 +38,7 @@ class Command(BaseCommand):
                         url = sections[1].split(" ")[1]
                         protocol = sections[1].split(" ")[2]
                     except:
+                        print(x)
                         request_type = None
                         url = None
                         protocol = None
