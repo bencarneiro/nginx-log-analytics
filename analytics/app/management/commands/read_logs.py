@@ -38,10 +38,6 @@ class Command(BaseCommand):
                 if len(subsections) != 3:
                     print(x)
                     continue
-                if len(subsections[0]) > 8:
-                    print(x)
-                    continue
-                    # subsections = [None, None, None]
                 http_data = sections[2].split(" ")
 
                 r = Request(
@@ -56,15 +52,9 @@ class Command(BaseCommand):
                     user_agent = sections[5]
                 )
                 objects_to_insert += [r]
-
-                # r.save()
                 z += 1
-                # print(z)
                 if z > 1000:
-                    # print("BULK CREATE")
-                    # print(objects_to_insert)
                     Request.objects.bulk_create(objects_to_insert)
-                    # break
                     objects_to_insert = []
                     z = 0
                     
