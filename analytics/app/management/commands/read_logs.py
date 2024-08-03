@@ -25,7 +25,7 @@ class Command(BaseCommand):
             "access.log.14"
         ]
         for filepath in filenames:
-            f = open(filepath, "r")
+            f = open("/var/log/nginx/" + filepath, "r")
             for x in f:
                 try:
                     sections = x.split('"')
