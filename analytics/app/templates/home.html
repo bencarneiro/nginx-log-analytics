@@ -19,8 +19,8 @@ function get_data() {
             const DAILY_USER_LABELS = {{ daily_user_labels | safe }};
             const DAILY_USER_COUNTS = {{ daily_user_counts | safe }};
             const DAILY_REQUEST_COUNTS = {{ daily_request_counts | safe }};
-            // const URL_LABELS = {{ url_labels | safe }};
-            // const URL_COUNTS = {{ url_values | safe }};
+            const URL_LABELS = {{ url_labels | safe }};
+            const URL_COUNTS = {{ url_values | safe }};
 
             new Chart(document.getElementById("visitors"), {
                         type: "bar",
@@ -78,32 +78,32 @@ function get_data() {
                         });
 
 
-//             new Chart(document.getElementById("urls"), {
-//                         type: "bar",
-//                         data: {
-//                             labels: URL_LABELS,
-//                             datasets: [
-//                             {
-//                                 data: URL_COUNTS,
-//                                 label: "Unique Visitors to this URL",
-//                                 borderColor: "#3e95cd",
-//                                 fill: false
-//                             }
-//                             ]
-//                         },
-//                         options: {
-//                             title: {
-//                             display: true,
-//                             responsive: true,
-//                             text: "Unique Visitors to this URL"
-//                             },
-//                             scales: {
-//                             y: {
-//                                 min: 0
-//                             }
-//                             }
-//                         }
-//                         });
+            new Chart(document.getElementById("urls"), {
+                        type: "bar",
+                        data: {
+                            labels: URL_LABELS,
+                            datasets: [
+                            {
+                                data: URL_COUNTS,
+                                label: "Unique Visitors to this URL",
+                                borderColor: "#3e95cd",
+                                fill: false
+                            }
+                            ]
+                        },
+                        options: {
+                            title: {
+                            display: true,
+                            responsive: true,
+                            text: "Unique Visitors to this URL"
+                            },
+                            scales: {
+                            y: {
+                                min: 0
+                            }
+                            }
+                        }
+                        });
 }
 get_data()
 </script>
