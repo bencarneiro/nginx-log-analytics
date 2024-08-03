@@ -27,40 +27,47 @@ class Command(BaseCommand):
         for filepath in filenames:
             print(filepath)
             f = open("/var/log/nginx/" + filepath, "r")
+            z = 0
+            objects_to_insert = []
+            # print(z)
             for x in f:
-                try:
-                    sections = x.split('"')
-                    ip = sections[0].split(" - - ")[0]
-                    date = sections[0].split("[")[1].split("]")[0]
-                    date = datetime.datetime.strptime(date, '%d/%b/%Y:%H:%M:%S %z')
-                    try:
-                        subsections = sections[1].split(" ")
-                        request_type = subsections[0]
-                        url = subsections[1]
-                        protocol = subsections[2]
-                    except:
-                        print(x)
-                        request_type = None
-                        url = None
-                        protocol = None
-                    subsections = sections[2].split(" ")
-                    status_code = subsections[1]
-                    bytes_transferred = subsections[2]
-                    referrer_url = sections[3]
-                    user_agent = sections[5]
-
-                    r = Request(
-                        ip_address = ip,
-                        dt = date,
-                        request_type = request_type,
-                        url = url,
-                        protocol = protocol,
-                        status_code = int(status_code),
-                        bytes_transferred = int(bytes_transferred),
-                        referrer_url = referrer_url,
-                        user_agent = user_agent
-                    )
-                    r.save()
-                except Exception as e:
-                    print(e)
+                # print(x)
+                sections = x.split('"')
+                date = sections[0].split("[")[1].split("]")[0]
+                subsections = sections[1].split(" ")
+                if len(subsections) != 3:
                     print(x)
+                    continue
+                if len(subsections[0]) > 8:
+                    print(x)
+                    continue
+                    # subsections = [None, None, None]
+                http_data = sections[2].split(" ")
+
+                r = Request(
+                    ip_address = sections[0].split(" - - ")[0],
+                    dt =  datetime.datetime.strptime(date, '%d/%b/%Y:%H:%M:%S %z'),
+                    request_type = subsections[0],
+                    url = subsections[1],
+                    protocol = subsections[2],
+                    status_code = http_data[1],
+                    bytes_transferred = http_data[2],
+                    referrer_url = sections[3],
+                    user_agent = sections[5]
+                )
+                objects_to_insert += [r]
+
+                # r.save()
+                z += 1
+                # print(z)
+                if z > 1000:
+                    # print("BULK CREATE")
+                    # print(objects_to_insert)
+                    Request.objects.bulk_create(objects_to_insert)
+                    # break
+                    objects_to_insert = []
+                    z = 0
+                    
+            Request.objects.bulk_create(objects_to_insert)
+            f.close()
+                
