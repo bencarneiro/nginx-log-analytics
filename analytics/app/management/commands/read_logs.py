@@ -38,6 +38,10 @@ class Command(BaseCommand):
                 if len(subsections) != 3:
                     print(x)
                     continue
+                if len(subsections[0]) > 8:
+                    print(x)
+                    continue
+                    # subsections = [None, None, None]
                 http_data = sections[2].split(" ")
 
                 r = Request(
